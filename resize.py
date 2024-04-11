@@ -1,10 +1,13 @@
 
+from lib2to3.fixes.fix_methodattrs import MAP
 import os
 import sys
 from pathlib import Path
 from PIL import Image
+from moviepy.editor import VideoFileClip
 
 IMG_EXT = [".jpg", ".jpeg", ".png"]
+VIDEO_EXT = [".mp4"]
 WORKDIR = "/mnt/c/Users/bapti/Documents/Wordpress-img/"
 
 MAX_SIZE = int(sys.argv[1]) #Max width or height dimension
@@ -15,6 +18,8 @@ def get_files():
         for file in target_dir:
             if Path(file).suffix in IMG_EXT:                
                 resize_picture(file, int(is_portrait(file)))
+            elif Path(file).suffix in VIDEO_EXT:
+                resize_movie(file)
             elif Path(file).mkdir:
                 pass
             else:
@@ -32,6 +37,12 @@ def resize_picture(file, format: int):
     compress_image((WORKDIR + f"{Path(file).stem}-resized{Path(file).suffix}"), WORKDIR + "compressed-img/" + f"{Path(file).stem}-compress{Path(file).suffix}") 
     os.remove(WORKDIR + f"{Path(file).stem}-resized{Path(file).suffix}")
     os.rename(WORKDIR + file, WORKDIR + "original-img/" + file)
+
+def resize_movie(file):
+    pass
+#     clip = VideoFileClip(file) 
+#     clip_resized = clip.resize(height=360)  # make the height 360px ( According to moviePy documenation The width is then computed so that the width/height ratio is conserved.)
+#     clip_resized.write_videofile("movie_resized.mp4")
 
 
 def compress_image(source_path, dest_path):
