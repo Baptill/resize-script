@@ -6,7 +6,7 @@ from pathlib import Path
 from PIL import Image
 from moviepy.editor import VideoFileClip
 
-IMG_EXT = [".jpg", ".jpeg", ".png"]
+IMG_EXT = [".jpg", ".jpeg", ".png", ".avif"]
 VIDEO_EXT = [".mp4", ".mov"]
 WORKDIR = "/mnt/c/Users/bapti/Documents/Wordpress-img/"
 
