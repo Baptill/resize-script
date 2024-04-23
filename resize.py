@@ -6,7 +6,7 @@ from pathlib import Path
 from PIL import Image
 from moviepy.editor import VideoFileClip
 
-IMG_EXT = [".jpg", ".jpeg", ".png", ".avif"]
+IMG_EXT = [".jpg", ".jpeg", ".png"]
 VIDEO_EXT = [".mp4", ".mov"]
 WORKDIR = "/mnt/c/Users/bapti/Documents/Wordpress-img/"
 
@@ -35,8 +35,9 @@ def is_portrait(file) -> bool:
 def resize_picture(file, format, distance, quality):
     im = Image.open(WORKDIR + file)
     ratio =  distance / im.size[format]    
-    resized_im = im.resize((round(im.size[0]*ratio), round(im.size[1]*ratio)))
-    resized_im.save(WORKDIR + f"{Path(file).stem}-resized{Path(file).suffix}")
+    resized_im = im.resize((round(im.size[0]*ratio), round(im.size[1]*ratio)))  
+    rgb_im = resized_im.convert('RGB')
+    rgb_im.save(WORKDIR + f"{Path(file).stem}-resized{Path(file).suffix}")
     compress_image((WORKDIR + f"{Path(file).stem}-resized{Path(file).suffix}"), WORKDIR + "compressed-img/" + f"{Path(file).stem}-compress{Path(file).suffix}", quality) 
     os.remove(WORKDIR + f"{Path(file).stem}-resized{Path(file).suffix}")
     os.rename(WORKDIR + file, WORKDIR + "original-img/" + file)
